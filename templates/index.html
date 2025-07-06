@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pokémon Collector</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    /* Animated Background */
+    .bg-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .bg-particles::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"><animate attributeName="opacity" values="0.1;0.3;0.1" dur="3s" repeatCount="indefinite"/></circle><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"><animate attributeName="opacity" values="0.1;0.4;0.1" dur="2s" repeatCount="indefinite"/></circle><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"><animate attributeName="opacity" values="0.1;0.5;0.1" dur="4s" repeatCount="indefinite"/></circle></svg>');
+      animation: float 10s ease-in-out infinite;
+    }
+    
+    /* Modern Navbar */
+    .navbar {
+      background: rgba(255, 255, 255, 0.1) !important;
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: white !important;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+    
+    .nav-link {
+      color: rgba(255, 255, 255, 0.9) !important;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      margin: 0 0.5rem;
+    }
+    
+    .nav-link:hover {
+      color: white !important;
+      transform: translateY(-2px);
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    /* Hero Section */
+    .hero-section {
+      text-align: center;
+      padding: 4rem 0;
+      color: white;
+    }
+    
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    
+    @keyframes glow {
+      from { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+      to { text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.3); }
+    }
+    
+    .hero-subtitle {
+      font-size: 1.3rem;
+      margin-bottom: 3rem;
+      opacity: 0.9;
+      animation: fadeInUp 1s ease-out 0.5s both;
+    }
+    
+    /* Pokemon Cards */
+    .pokemon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+      animation: fadeInUp 1s ease-out 0.8s both;
+    }
+    
+    .pokemon-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .pokemon-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .pokemon-card:hover::before {
+      left: 100%;
+    }
+    
+    .pokemon-card:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .pokemon-img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .pokemon-card:nth-child(even) .pokemon-img {
+      animation-delay: -1.5s;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+    }
+    
+    .pokemon-id {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    
+    /* CTA Button */
+    .cta-button {
+      background: linear-gradient(45deg, #ff6b6b, #ffd93d, #4ecdc4, #45b7d1);
+      background-size: 400% 400%;
+      animation: gradientShift 4s ease infinite;
+      border: none;
+      border-radius: 50px;
+      padding: 1rem 3rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+    }
+    
+    .cta-button:hover::before {
+      transform: translateX(100%);
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      color: white;
+    }
+    
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .pokemon-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+      
+      .pokemon-card {
+        padding: 1rem;
+      }
+      
+      .pokemon-img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+    
+    /* Floating Elements */
+    .floating-element {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.1;
+      animation: floatRandom 8s ease-in-out infinite;
+    }
+    
+    .floating-element:nth-child(1) {
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+    
+    .floating-element:nth-child(2) {
+      top: 60%;
+      right: 10%;
+      animation-delay: 2s;
+    }
+    
+    .floating-element:nth-child(3) {
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+    
+    @keyframes floatRandom {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-20px) rotate(5deg); }
+      50% { transform: translateY(10px) rotate(-5deg); }
+      75% { transform: translateY(-10px) rotate(3deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="bg-particles"></div>
+  
+  <!-- Floating Elements -->
+  <div class="floating-element">
+    <i class="fas fa-star" style="font-size: 2rem; color: rgba(255, 255, 255, 0.1);"></i>
+  </div>
+  <div class="floating-element">
+    <i class="fas fa-heart" style="font-size: 1.5rem; color: rgba(255, 255, 255, 0.1);"></i>
+  </div>
+  <div class="floating-element">
+    <i class="fas fa-bolt" style="font-size: 1.8rem; color: rgba(255, 255, 255, 0.1);"></i>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+        <i class="fas fa-gamepad me-2"></i>
+        Pokémon Collector
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="/">
+              <i class="fas fa-home me-1"></i>Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/draw">
+              <i class="fas fa-dice me-1"></i>Draw
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/collection">
+              <i class="fas fa-box me-1"></i>Collection
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-warning" href="/exit">
+              <i class="fas fa-sign-out-alt me-1"></i>Exit
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container hero-section" style="margin-top: 100px;">
+    <h1 class="hero-title">
+      <i class="fas fa-sparkles me-3"></i>
+      Pokémon Collector
+      <i class="fas fa-sparkles ms-3"></i>
+    </h1>
+    <p class="hero-subtitle">
+      Embark on an epic journey to collect and discover amazing Pokémon!
+    </p>
+
+    <div class="pokemon-grid">
+      {% for id in [1, 4, 7, 25, 39, 133] %}
+      <div class="pokemon-card">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ id }}.png"
+             alt="Pokemon #{{ id }}" class="pokemon-img">
+        <div class="pokemon-id">#{{ id }}</div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <a href="/draw" class="cta-button">
+      <i class="fas fa-magic"></i>
+      Draw Your Pokémon
+    </a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

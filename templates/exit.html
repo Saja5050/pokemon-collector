@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Goodbye!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        
+        /* Animated Background */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .bg-particles::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(255, 107, 107, 0.1) 0%, transparent 70%),
+                radial-gradient(circle at 75% 75%, rgba(255, 217, 61, 0.1) 0%, transparent 70%),
+                radial-gradient(circle at 50% 50%, rgba(78, 205, 196, 0.1) 0%, transparent 70%);
+            animation: morphBackground 8s ease-in-out infinite;
+        }
+        
+        @keyframes morphBackground {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            33% { transform: scale(1.1) rotate(120deg); }
+            66% { transform: scale(0.9) rotate(240deg); }
+        }
+        
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.1;
+            animation: floatRandom 12s ease-in-out infinite;
+        }
+        
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .floating-element:nth-child(2) {
+            top: 20%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+        
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        
+        .floating-element:nth-child(4) {
+            bottom: 10%;
+            right: 10%;
+            animation-delay: 6s;
+        }
+        
+        @keyframes floatRandom {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            25% { transform: translateY(-30px) rotate(90deg) scale(1.2); }
+            50% { transform: translateY(20px) rotate(180deg) scale(0.8); }
+            75% { transform: translateY(-15px) rotate(270deg) scale(1.1); }
+        }
+        
+        /* Main Container */
+        .goodbye-container {
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 10;
+            animation: slideInScale 1s ease-out;
+            padding: 2rem 1rem;
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        @keyframes slideInScale {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .goodbye-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            margin: 2rem auto;
+        }
+        
+        .goodbye-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            animation: shimmer 4s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .goodbye-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: wave 2s ease-in-out infinite;
+            display: inline-block;
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+        
+        .goodbye-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.3); }
+        }
+        
+        .goodbye-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .pokemon-memories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+        
+        .memory-pokemon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            animation: bounce 2s ease-in-out infinite;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .memory-pokemon:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .memory-pokemon:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        .memory-pokemon:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+        
+        .action-button {
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            border: none;
+            border-radius: 25px;
+            padding: 1rem 2.5rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            font-size: 1.1rem;
+        }
+        
+        .action-button.secondary {
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+        }
+        
+        .action-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+        
+        .action-button:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .action-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            color: white;
+        }
+        
+        .thank-you-message {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+        
+        .thank-you-message p {
+            margin: 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        /* Hearts Animation */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        .heart {
+            position: absolute;
+            color: rgba(255, 107, 107, 0.6);
+            font-size: 1.5rem;
+            animation: heartFloat 4s ease-in-out infinite;
+        }
+        
+        @keyframes heartFloat {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-20px) scale(1);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .goodbye-card {
+                padding: 2.5rem 2rem;
+                margin: 1rem;
+            }
+            
+            .goodbye-title {
+                font-size: 2.2rem;
+            }
+            
+            .goodbye-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .pokemon-memories {
+                gap: 0.5rem;
+            }
+            
+            .memory-pokemon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-particles"></div>
+    
+    <!-- Floating Elements -->
+    <div class="floating-element">
+        <i class="fas fa-star" style="font-size: 3rem; color: rgba(255, 217, 61, 0.2);"></i>
+    </div>
+    <div class="floating-element">
+        <i class="fas fa-heart" style="font-size: 2.5rem; color: rgba(255, 107, 107, 0.2);"></i>
+    </div>
+    <div class="floating-element">
+        <i class="fas fa-sparkles" style="font-size: 2rem; color: rgba(78, 205, 196, 0.2);"></i>
+    </div>
+    <div class="floating-element">
+        <i class="fas fa-gem" style="font-size: 2.8rem; color: rgba(69, 183, 209, 0.2);"></i>
+    </div>
+
+    <!-- Hearts Animation -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- Main Content -->
+    <div class="goodbye-container">
+        <div class="goodbye-card">
+            <div class="goodbye-icon">
+                <i class="fas fa-hand-paper"></i>
+            </div>
+            
+            <h1 class="goodbye-title">
+                Thank You for Playing!
+            </h1>
+            
+            <p class="goodbye-subtitle">
+                Your Pokémon adventure was amazing! We hope you had fun collecting and discovering new friends along the way.
+            </p>
+            
+            <div class="thank-you-message">
+                <p>
+                    <i class="fas fa-heart me-2" style="color: #ff6b6b;"></i>
+                    Every Pokémon you caught was a step in an incredible journey. Until we meet again, trainer!
+                    <i class="fas fa-heart ms-2" style="color: #ff6b6b;"></i>
+                </p>
+            </div>
+            
+            <div class="pokemon-memories">
+                <div class="memory-pokemon">⚡</div>
+                <div class="memory-pokemon">🔥</div>
+                <div class="memory-pokemon">💧</div>
+                <div class="memory-pokemon">🌿</div>
+            </div>
+            
+            <div class="action-buttons">
+                <a href="/" class="action-button">
+                    <i class="fas fa-home"></i>
+                    Back to Home
+                </a>
+                <a href="/draw" class="action-button secondary">
+                    <i class="fas fa-magic"></i>
+                    One More Draw?
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Hearts animation
+        function createHeart() {
+            const heartsContainer = document.getElementById('heartsContainer');
+            const heart = document.createElement('i');
+            heart.className = 'fas fa-heart heart';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            
+            heartsContainer.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+        
+        // Create hearts periodically
+        setInterval(createHeart, 800);
+        
+        // Initial hearts
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createHeart, i * 200);
+        }
+        
+        // Sparkle effect on buttons
+        document.querySelectorAll('.action-button').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                const sparkle = document.createElement('div');
+                sparkle.innerHTML = '✨';
+                sparkle.style.position = 'absolute';
+                sparkle.style.top = '50%';
+                sparkle.style.left = '50%';
+                sparkle.style.transform = 'translate(-50%, -50%)';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.style.animation = 'sparkleEffect 0.6s ease-out';
+                this.appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 600);
+            });
+        });
+        
+        // Add sparkle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes sparkleEffect {
+                0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; }
+                100% { transform: translate(-50%, -50%) scale(2) rotate(180deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
