@@ -18,14 +18,14 @@ Run the deployment script on a fresh Ubuntu server:
 
 ```bash
 # Download and run deployment script
-curl -sSL https://raw.githubusercontent.com/YOUR_USERNAME/pokemon-collector/main/deploy.sh | sudo bash
+curl -sSL https://raw.githubusercontent.com/Saja5050/pokemon-collector/main/deploy.sh | sudo bash
 ```
 
 ### Option 2: Manual Installation
 
 1. **Clone the repository**:
 ```bash
-git clone https://github.com/YOUR_USERNAME/pokemon-collector.git
+git clone https://github.com/Saja5050/pokemon-collector.git
 cd pokemon-collector
 ```
 
